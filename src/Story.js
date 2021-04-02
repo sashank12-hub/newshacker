@@ -29,7 +29,17 @@ getdata(){
    this.setState({ tabledata:slice})
     
   })}
+  handleitems=(e)=>{
+    const count=e.target.value;
+    this.setState({perpage:parseInt(count)},()=>{
+      this.setState({pageCount:Math.ceil(this.props.story.length/this.state.perpage),},()=>{
+        var slice=this.state.orgtabledata.slice(this.state.offset,this.state.offset+this.state.perpage)
+        this.setState({ tabledata:slice})
+      })
+
+    })
   
+  }
 handleChange=(e)=>{
   console.log(e.target.value)
   var order=e.target.value;
@@ -111,6 +121,8 @@ handleChange=(e)=>{
   })
   // 
 }
+
+
 handlepageclick = (e) => {
   const selectedPage = e.selected;
   const offset = selectedPage * this.state.perpage;
@@ -151,6 +163,20 @@ loadMoreData() {
          <option value="by">score</option>
        </select>
       </label>
+      <div>
+      <label  htmlFor="itemsperpage">Display Items per page:
+      <select id="itemsperpage"
+      defaultValue={this.state.itemsperpage} 
+      onChange={this.handleitems} 
+      >
+         <option value="10">10</option>
+         <option value="20">20</option>
+         <option value="30">30</option>
+         <option value="40">40</option>
+       </select>
+      
+      </label>
+      </div>
       </div>
       
       <h1 className="heading">Hacker News Stories</h1>
@@ -215,32 +241,4 @@ loadMoreData() {
 
 
 
-//     render() {
-//         return (
-//             <div>
-          
-                    
-
-        
-//     <ReactPaginate
-//     previousLabel={"pre"}
-//     nextLabel={"nex"}
-//     breakLabel={"..."}
-//     breakClassName={"break-me"}
-//     pageCount={this.state.pageCount}
-//     marginPagesDisplayed={2}
-//     pageRangeDisplayed={5}
-//     onPageChange={this.handlepageclick}// =(e)=>this.handleclick(e) then no need of binding
-//     containerClassName={"pagination"}
-//     subContainerClassName={"pages pagination"}
-//     activeClassName={"active"}
-   
-//     />
-
-//             </div>
-//         )
-//     }
-// }
-
-// export default First;
 
